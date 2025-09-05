@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerElement : NetworkBehaviour {
 
     [SyncVar(hook = nameof(OnElementChanged))]
-    public ElementType element;
+    public ElementType element = ElementType.neutral;
 
     [SerializeField] private Renderer ren;
     void Start() {
@@ -13,11 +13,6 @@ public class PlayerElement : NetworkBehaviour {
             this.element = GameManager.Instance.AssignElement();
         }
     }
-
-    void Update() {
-
-    }
-
     public override void OnStopServer() {
         base.OnStopServer();
         GameManager.Instance.RemoveElement(element);
