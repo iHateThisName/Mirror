@@ -28,5 +28,8 @@ public class PlayerElement : NetworkBehaviour {
             case ElementType.Grass: c = Color.green; break;
         }
         this.ren.material.color = c;
+
+        this.transform.position = GameManager.Instance.GetSpawnPoint(element).position;
+
     }
 }

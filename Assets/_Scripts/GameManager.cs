@@ -9,7 +9,9 @@ public class GameManager : NetworkManager {
     private int waterCount = 0;
     private int grassCount = 0;
 
-    private List<GameObject> graveyard = new List<GameObject>();
+    [SerializeField] private List<GameObject> graveyard = new List<GameObject>();
+
+    public Transform FireSpawnPoint, WaterSpawnPoint, GrassSpawnPoint;
 
     public override void Awake() {
         base.Awake();
@@ -48,18 +50,45 @@ public class GameManager : NetworkManager {
     }
 
     public void KillYourself(GameObject player, ElementType element) {
-        this.graveyard.Add(player);
-        player.SetActive(false);
+        if (player == null) return;
 
-        if (this.graveyard.Count == 2) {
+        for (int i = 0; i < player.transform.childCount; i++) {
+            GameObject child = player.transform.GetChild(i).gameObject;
+            this.graveyard.Add(child);
+            child.SetActive(false);
+        }
+        if (this.graveyard.Count == 4) {
             RespawnAll();
         }
     }
 
     private void RespawnAll() {
         this.graveyard.ForEach(go => {
-            go.SetActive(true);
-            go.transform.position = new Vector3(Random.Range(-9, 9), Random.Range(-5, 5), 0);
+            if (go == null) {
+                this.graveyard.Remove(go);
+
+            } else {
+                this.graveyard.Remove(go);
+                go.SetActive(true);
+                ElementType element = go.transform.parent.GetComponent<PlayerElement>().element;
+                go.transform.position = GetSpawnPoint(element).position;
+            }
         });
+    }
+
+    public Transform GetSpawnPoint(ElementType element) {
+        switch (element) {
+            case ElementType.Fire:
+                return FireSpawnPoint;
+
+            case ElementType.Water:
+                return WaterSpawnPoint;
+
+            case ElementType.Grass:
+                return GrassSpawnPoint;
+
+            default:
+                return FireSpawnPoint;
+        }
     }
 }
