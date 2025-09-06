@@ -8,7 +8,6 @@ public class PlayerElement : NetworkBehaviour {
 
     [SerializeField] private Renderer ren;
 
-    [SerializeField] private int health = 1;
     void Start() {
 
         if (isServer) { // true of the object is on the server

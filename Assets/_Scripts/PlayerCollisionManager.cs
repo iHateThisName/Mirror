@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerCollisionManager : MonoBehaviour {
 
-    PlayerElement playerElement;
+    [SerializeField] private PlayerElement playerElement;
 
     private void OnCollisionEnter2D(Collision2D collision) {
 
