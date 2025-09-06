@@ -10,7 +10,10 @@ public class PlayerMove : NetworkBehaviour {
         float moveVertical = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
-        transform.Translate(movement * Time.deltaTime * 0.75f);
 
+        Vector3 newPosition = transform.position + movement * Time.deltaTime;
+        newPosition.x = Mathf.Clamp(newPosition.x, -9f, 9f);
+        newPosition.y = Mathf.Clamp(newPosition.y, -5f, 5f);
+        this.transform.position = newPosition;
     }
 }
