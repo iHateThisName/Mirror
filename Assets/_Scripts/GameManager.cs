@@ -1,13 +1,14 @@
 using Mirror;
-public class GameManager : NetworkBehaviour {
+public class GameManager : NetworkManager {
 
     public static GameManager Instance;
 
-    [SyncVar] private int fireCount = 0;
-    [SyncVar] private int waterCount = 0;
-    [SyncVar] private int grassCount = 0;
+    private int fireCount = 0;
+    private int waterCount = 0;
+    private int grassCount = 0;
 
-    private void Awake() {
+    public override void Awake() {
+        base.Awake();
         if (Instance == null) {
             Instance = this;
         } else {
