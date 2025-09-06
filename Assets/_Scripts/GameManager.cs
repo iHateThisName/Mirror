@@ -57,9 +57,9 @@ public class GameManager : NetworkManager {
             this.graveyard.Add(child);
             child.SetActive(false);
         }
-        if (this.graveyard.Count == 4) {
-            RespawnAll();
-        }
+        //if (this.graveyard.Count == 4) {
+        //    RespawnAll();
+        //}
     }
 
     private void RespawnAll() {

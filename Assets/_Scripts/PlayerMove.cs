@@ -1,8 +1,6 @@
 using Mirror;
 using UnityEngine;
 public class PlayerMove : NetworkBehaviour {
-
-
     private void Update() {
         if (!isLocalPlayer) return;
 
