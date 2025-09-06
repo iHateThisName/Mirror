@@ -1,4 +1,6 @@
 using Mirror;
+using System.Collections.Generic;
+using UnityEngine;
 public class GameManager : NetworkManager {
 
     public static GameManager Instance;
@@ -6,6 +8,8 @@ public class GameManager : NetworkManager {
     private int fireCount = 0;
     private int waterCount = 0;
     private int grassCount = 0;
+
+    private List<GameObject> graveyard = new List<GameObject>();
 
     public override void Awake() {
         base.Awake();
@@ -41,5 +45,21 @@ public class GameManager : NetworkManager {
                 grassCount--;
                 break;
         }
+    }
+
+    public void KillYourself(GameObject player, ElementType element) {
+        this.graveyard.Add(player);
+        player.SetActive(false);
+
+        if (this.graveyard.Count == 2) {
+            RespawnAll();
+        }
+    }
+
+    private void RespawnAll() {
+        this.graveyard.ForEach(go => {
+            go.SetActive(true);
+            go.transform.position = new Vector3(Random.Range(-9, 9), Random.Range(-5, 5), 0);
+        });
     }
 }
