@@ -14,9 +14,10 @@ public class PlayerElement : NetworkBehaviour {
             this.element = GameManager.Instance.AssignElement();
         }
     }
-    public override void OnStopServer() {
-        base.OnStopServer();
+
+    private void OnPlayerDisconnected() {
         GameManager.Instance.RemoveElement(element);
+
     }
 
     // Called on clients when SyncVar changes
